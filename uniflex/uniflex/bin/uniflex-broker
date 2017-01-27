@@ -1,0 +1,80 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+uniflex-broker: First implementation of UniFlex agent
+
+Usage:
+   uniflex-broker [options] [-q | -v]
+
+Options:
+   --logfile name      Name of the logfile
+   --xpub pub_url      Publisher URL
+   --xsub sub_url      Subscriber URL
+
+Example:
+   uniflex-broker --xpub tcp://127.0.0.1:8990 --xsub tcp://127.0.0.1:8989
+
+Other options:
+   -h, --help          show this help message and exit
+   -q, --quiet         print less text
+   -v, --verbose       print more text
+   --version           show version and exit
+"""
+
+import logging
+from uniflex.core.broker import Broker
+
+__author__ = "Piotr Gawlowicz, Mikolaj Chwalisz"
+__copyright__ = "Copyright (c) 2015, Technische Universität Berlin"
+__version__ = "0.1.0"
+__email__ = "{gawlowicz, chwalisz}@tkn.tu-berlin.de"
+
+log = logging.getLogger('uniflex-broker')
+
+if __name__ == "__main__":
+    try:
+        from docopt import docopt
+    except:
+        print("""
+        Please install docopt using:
+            pip install docopt==0.6.1
+        For more refer to:
+        https://github.com/docopt/docopt
+        """)
+        raise
+
+    args = docopt(__doc__, version=__version__)
+
+    log_level = logging.INFO  # default
+    if args['--verbose']:
+        log_level = logging.DEBUG
+    elif args['--quiet']:
+        log_level = logging.ERROR
+
+    xpub = "tcp://127.0.0.1:8990"
+    xsub = "tcp://127.0.0.1:8989"
+    if args['--xpub']:
+        xpub = args['--xpub']
+
+    if args['--xsub']:
+        xsub = args['--xsub']
+
+    logfile = None
+    if args['--logfile']:
+        logfile = args['--logfile']
+
+    logging.basicConfig(filename=logfile, level=log_level,
+                        format='%(asctime)s - %(name)s.%(funcName)s() - %(levelname)s - %(message)s')
+    log.info(args)
+    broker = Broker(xpub, xsub)
+
+    try:
+        log.info("Start Broker with XPUB: {}, XSUB: {}".format(xpub, xsub))
+        broker.start()
+        broker.join()
+    except KeyboardInterrupt:
+        log.debug("Broker exits")
+        broker.stop()
+    finally:
+        log.debug("Exit")

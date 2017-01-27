@@ -1,0 +1,11 @@
+Metadata-Version: 1.0
+Name: uniflex-app-iperf
+Version: 0.1.0
+Summary: Iperf Module
+Home-page: https://github.com/uniflex
+Author: Anatolij Zubow
+Author-email: zubow@tu-berlin.de
+License: UNKNOWN
+Description: Implementation of iperf app
+Keywords: wireless control
+Platform: UNKNOWN

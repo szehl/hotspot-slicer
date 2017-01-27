@@ -1,0 +1,18 @@
+## UniFlex Agent config file
+
+config:
+  name: 'Local_Controller'
+  info: 'local test of wifi module'
+  iface: 'lo'
+
+control_applications:
+  myController:
+      file : local_test.py
+      class_name : WifiTestController
+      kwargs : {}
+
+modules:
+  wifi:
+      module : uniflex_module_wifi
+      class_name : WifiModule
+      devices : ['phy0']

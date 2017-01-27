@@ -1,0 +1,17 @@
+## UniFlex Agent config file
+
+config:
+  name: 'Local_Controller'
+  info: 'local test of R&S signal generator module'
+  iface: 'lo'
+
+control_applications:
+  myController:
+      file : local_test.py
+      class_name : RSController
+      kwargs : {}
+
+modules:
+  rsmodule:
+      module : uniflex_module_rs_signal_gen
+      class_name : RsSignalGenModule

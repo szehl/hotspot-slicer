@@ -1,0 +1,15 @@
+## UniFlex Agent config file
+
+config:
+  name: 'Backbone Node Agent'
+  info: 'Backbone Node Agent'
+  iface: 'wlp2s0'
+  sub: "tcp://100.0.0.2:8990"
+  pub: "tcp://100.0.0.2:8989"
+
+
+control_applications:
+  myController:
+      file : slave_control_app.py
+      class_name : SlaveController
+      kwargs : {}

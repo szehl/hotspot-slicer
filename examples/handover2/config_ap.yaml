@@ -1,0 +1,23 @@
+## UniFlex Agent config file
+
+config:
+  name: 'local_AP_control_progs'
+  info: 'Control programs running on each AP locally'
+  iface: 'lo'
+
+control_applications:
+  scanner:
+      file : ap_control_programs.py
+      class_name : Scanner
+      kwargs : {"mode": "LOCAL", "ap_iface": "ap1", "scan_iface": "lo", "channels": [44, 48], "hopping_interval": 1, "reporting_interval":1}
+
+modules:
+  discovery:
+      module : uniflex_module_discovery_pyre
+      class_name : PyreDiscoverySlaveModule
+      kwargs: {"iface":"lo", "groupName":"uniflex_1234"}
+
+  wifi:
+      module : uniflex_module_wifi
+      class_name : WifiModule
+      devices : ['phy0']

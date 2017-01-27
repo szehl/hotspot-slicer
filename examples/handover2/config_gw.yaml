@@ -1,0 +1,17 @@
+## UniFlex Agent config file
+
+config:
+  name: 'local_GW_control_progs'
+  info: 'Pure agent running on Gateway node for changing routing in the backhaul'
+  type: 'local'
+  iface: 'lo'
+
+modules:
+  discovery:
+      module : uniflex_module_discovery_pyre
+      class_name : PyreDiscoverySlaveModule
+      kwargs: {"iface":"lo", "groupName":"uniflex_1234"}
+
+  netlinux:
+      module : uniflex_module_net_linux
+      class_name : NetworkModule

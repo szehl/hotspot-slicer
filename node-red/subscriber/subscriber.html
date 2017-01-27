@@ -1,0 +1,49 @@
+<script type="text/javascript">
+  RED.nodes.registerType('uniflex-sub', {
+    category: 'input',
+    color: '#E9967A',
+    defaults: {
+      name: {
+        value: ""
+      },
+      mode: {
+        value: "sub"
+      },
+      uri: {
+        value: "",
+        required: true
+      },
+      server: {
+        value: false
+      },
+      topics: {
+        value: "",
+      }
+    },
+    inputs: 0,
+    outputs: 1,
+    icon: "zmq.png",
+    label: function() {
+      return this.name ? (this.name + "(" + this.uri + ")") : "uniflex-sub";
+    }
+  });
+</script>
+
+<script type="text/x-red" data-template-name="uniflex-sub">
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+  <div class="form-row">
+    <label for="node-input-uri"><i class="icon-link"></i> URI</label>
+    <input type="text" id="node-input-uri" placeholder="URI">
+  </div>
+  <div class="form-row">
+    <label for="node-input-topics"><i class="icon-rss"></i> Topics</label>
+    <input type="text" id="node-input-topics" placeholder="List of topics to subscribe (only for SUB)">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="lower-case">
+  <p>UniFlex subscriber. Receives events sent over broker</p>
+</script>

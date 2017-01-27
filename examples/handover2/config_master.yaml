@@ -1,0 +1,43 @@
+## UniFlex Agent config file of the BigAP controller
+
+config:
+  name: "BigAP_Controller"
+  info: 'global BIGAP controller'
+  iface: 'lo'
+  sub: "tcp://127.0.0.1:8990"
+  pub: "tcp://127.0.0.1:8989"
+
+broker:
+  xpub: "tcp://127.0.0.1:8990"
+  xsub: "tcp://127.0.0.1:8989"
+
+control_applications:
+  bigApController:
+      file : bigap_control_program.py
+      class_name : BigAPController
+      kwargs : {"mode": "GLOBAL", "ap_iface": "ap1", "gateway_host_name": "gateway"}
+
+  dhcp:
+      file : bigap_control_program.py
+      class_name : DHCPDaemon
+      kwargs : {"mode": "GLOBAL", "zmq_port" : 6868}
+
+  handover:
+      module : uniflex_module_handover
+      class_name : HandoverModule
+      kwargs : {"mode": "GLOBAL"}
+
+  wifi_topology:
+      module : uniflex_module_wireless_topology
+      class_name : WifiTopologyModule
+      kwargs : {"mode": "GLOBAL"}
+
+modules:
+  discovery:
+        module : uniflex_module_discovery_pyre
+        class_name : PyreDiscoveryMasterModule
+        kwargs: {"iface":"lo",
+                 "groupName":"uniflex_1234",
+                 "sub":"tcp://127.0.0.1:8990",
+                 "pub":"tcp://127.0.0.1:8989"
+                }

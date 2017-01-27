@@ -1,0 +1,21 @@
+{
+  "name": "node-red-uniflex",
+  "version": "0.1.0",
+  "description": "UniFlex nodes for Node-Red",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Piotr Gawłowicz <gawlowicz@tu-berlin.de>",
+  "repository" : "https://github.com/uniflex/node-red-uniflex",
+  "license": "",
+  "node-red": {
+    "nodes": {
+      "uniflex-sub": "subscriber/subscriber.js",
+      "uniflex-pub": "publisher/publisher.js"
+    }
+  },
+  "keywords" : ["node-red", "zmq", "node-red-zmq", "zeromq", "node-zeromq"],
+  "dependencies": {
+    "zmq": "^2.15.3"
+  }
+}

@@ -1,0 +1,33 @@
+## UniFlex Agent config file for the topology controller
+
+config:
+  name: "Topology_Controller"
+  info: 'global topology controller'
+  iface: 'lo'
+  sub: "tcp://127.0.0.1:8990"
+  pub: "tcp://127.0.0.1:8989"
+
+broker:
+  xpub: "tcp://127.0.0.1:8990"
+  xsub: "tcp://127.0.0.1:8989"
+
+control_applications:
+  topo_controller:
+      file : topo_discovery.py
+      class_name : WiFiTopologyController
+      kwargs : {"mode": "GLOBAL", "ap_iface": "ap1"}
+
+  wifi_topology:
+      module : uniflex_module_wireless_topology
+      class_name : WifiTopologyModule
+      kwargs : {}
+
+modules:
+  discovery:
+        module : uniflex_module_discovery_pyre
+        class_name : PyreDiscoveryMasterModule
+        kwargs: {"iface":"lo",
+                 "groupName":"uniflex_1234",
+                 "sub":"tcp://127.0.0.1:8990",
+                 "pub":"tcp://127.0.0.1:8989"
+                }

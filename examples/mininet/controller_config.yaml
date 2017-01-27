@@ -1,0 +1,29 @@
+
+## UniFlex Agent config file for the mininet wifi controller
+
+config:
+  name: "Mininet_WiFi_Controller"
+  info: 'global wifi mininet controller'
+  iface: 'lo'
+  sub: "tcp://20.0.0.2:8990"
+  pub: "tcp://20.0.0.2:8989"
+
+broker:
+  xpub: "tcp://20.0.0.2:8990"
+  xsub: "tcp://20.0.0.2:8989"
+
+control_applications:
+  mn_wifi_controller:
+      file : uniflex_mn_controller.py
+      class_name : MininetWiFiController
+      kwargs : {}
+
+modules:
+  discovery:
+        module : uniflex_module_discovery_pyre
+        class_name : PyreDiscoveryMasterModule
+        kwargs: {"iface":"ap1-eth1",
+                 "groupName":"uniflex_1234",
+                 "sub":"tcp://20.0.0.2:8990",
+                 "pub":"tcp://20.0.0.2:8989"
+                }

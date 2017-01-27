@@ -1,0 +1,18 @@
+## UniFlex Agent config file
+
+config:
+  name: 'Local_WiFi_Controller'
+  info: 'CPs and modules on single node'
+  iface: 'lo'
+
+control_applications:
+  myController:
+      file : local_control_app.py
+      class_name : MyController
+      kwargs : {}
+
+modules:
+  wifi:
+      module : uniflex_module_wifi
+      class_name : WifiModule
+      devices : ['phy0']

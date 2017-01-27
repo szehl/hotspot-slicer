@@ -1,0 +1,21 @@
+## UniFlex Agent config file
+
+config:
+  name: 'AP1'
+  info: 'config for agent running on AP'
+  iface: 'ap1-eth1'
+
+modules:
+  discovery:
+      module : uniflex_module_discovery_pyre
+      class_name : PyreDiscoverySlaveModule
+      kwargs: {"iface":"ap1-eth1", "groupName":"uniflex_1234"}
+
+  wlan:
+      module : uniflex_module_wifi
+      class_name : WifiModule
+      interfaces : ['ap1-wlan0', 'wlan0', 'wlan1']
+
+  iperf:
+      module : uniflex_module_iperf
+      class_name : IperfModule

@@ -1,0 +1,42 @@
+<script type="text/javascript">
+  RED.nodes.registerType('uniflex-pub', {
+    category: 'output',
+    color: '#E9967A',
+    defaults: {
+      name: {
+        value: ""
+      },
+      mode: {
+        value: "pub"
+      },
+      uri: {
+        value: "",
+        required: true
+      },
+      server: {
+        value: false
+      }
+    },
+    inputs: 1,
+    outputs: 0,
+    icon: "zmq.png",
+    label: function() {
+      return this.name ? (this.name + "(" + this.uri + ")") : "uniflex-pub";
+    }
+  });
+</script>
+
+<script type="text/x-red" data-template-name="uniflex-pub">
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+  <div class="form-row">
+    <label for="node-input-uri"><i class="icon-link"></i> URI</label>
+    <input type="text" id="node-input-uri" placeholder="URI">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="lower-case">
+  <p>UniFlex publisher, that sends events to broker. It accepts serialized events as <code>payload</code></p>
+</script>
