@@ -24,7 +24,7 @@ class IperfClientProcess(UniFlexThread):
 
     def task(self):
         self.log.debug('started scanner for iperf')
-        cmd = "/usr/bin/iperf -c {} -f M -t 1000 -i 1".format(self.destIp)
+        cmd = "/usr/bin/iperf -c {} -f m -t 1000 -i 1 -w 2.25k".format(self.destIp)
         self.process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
 
         while not self.is_stopped():
@@ -35,8 +35,11 @@ class IperfClientProcess(UniFlexThread):
                     break
                 throughput = self._helper_parseIperf(line)
                 if throughput:
-                    numbers = [int(s) for s in throughput.split() if s.isdigit()]
-                    throughput = numbers[0]
+                    #numbers = [int(s) for s in throughput.split() if s.isdigit()]
+                    numbers = throughput.split()
+                    print(throughput)
+                    print(numbers)
+                    throughput = float(numbers[0])
                     self.log.info('Throughput: {} MBps'.format(throughput))
                     sys.stdout.flush()
 

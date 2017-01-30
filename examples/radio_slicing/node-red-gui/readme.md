@@ -16,6 +16,7 @@
     sudo npm install zmq
     sudo npm install uniflex/node-red-uniflex
     sudo npm install node-red-node-smooth
+    npm install node-red-dashboard
 
 # Run example flow graph - moving average filter:
 
