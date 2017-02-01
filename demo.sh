@@ -101,5 +101,5 @@ sleep 40
       ***********************************
       Done Man.... restart script to repeat
       ***********************************"
-sleep 10
+sleep 30
 /root/slicer/demo_stop.sh
