@@ -43,8 +43,8 @@ class LocalRadioSlicer(modules.ControlApplication):
         self.log.info(self.device)
         self.myHMACID = 'RadioSlicerID'
         self.iface = 'ap5'
-        self.total_slots = 16
-        self.phy_to_data_factor = 0.35
+        self.total_slots = 20
+        self.phy_to_data_factor = 0.2
         # slots are in microseonds
         slot_duration = 20000  # 20 ms
 

@@ -40,3 +40,5 @@ sleep 1
 sudo hostapd hostapd-multi-ssid.conf &
 sleep 5
 sudo ifconfig wlan0_0 192.168.7.1 netmask 255.255.255.0
+sudo iwconfig ap5 rate 54M
+sudo iwconfig wlan0_0 rate 24M
