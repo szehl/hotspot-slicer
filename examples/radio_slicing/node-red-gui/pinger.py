@@ -29,7 +29,7 @@ class Pinger(modules.ControlApplication):
         self.hostList = hostList
 
     def _ping(self, address):
-        status, result = sp.getstatusoutput("ping -c1 -w1 " + str(address))
+        status, result = sp.getstatusoutput("ping -c1 -w5 " + str(address))
         if status == 0:
             return True
         else:
@@ -44,9 +44,9 @@ class Pinger(modules.ControlApplication):
         for host in self.hostList:
             isUp = self._ping(host)
             if isUp:
-                self.log.info("Host {} is UP".format(host))
+                self.log.debug("Host {} is UP".format(host))
             else:
-                self.log.info("Host {} is DOWN".format(host))
+                self.log.debug("Host {} is DOWN".format(host))
 
             event = HostStateEvent(host, isUp)
             self.send_event(event)

@@ -21,10 +21,14 @@ class IperfClientProcess(UniFlexThread):
         self.hostname = hostname
         self.destIp = destIp
         self.process = None
+        self.nicer = []
+        self.nicerSize = 5
+        self.nicerIter = 0
 
     def task(self):
         self.log.debug('started scanner for iperf')
-        cmd = "/usr/bin/iperf -c {} -f m -t 1000 -i 1 -w 2.25k".format(self.destIp)
+        cmd = "/usr/bin/iperf -c {} -f m -t 1000 -i 2".format(self.destIp)
+        #cmd = "pwd"
         self.process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
 
         while not self.is_stopped():
@@ -37,14 +41,27 @@ class IperfClientProcess(UniFlexThread):
                 if throughput:
                     #numbers = [int(s) for s in throughput.split() if s.isdigit()]
                     numbers = throughput.split()
-                    print(throughput)
-                    print(numbers)
+                    #print(throughput)
+                    #print(numbers)
                     throughput = float(numbers[0])
-                    self.log.info('Throughput: {} MBps'.format(throughput))
+                    self.log.debug('Throughput: {} MBps'.format(throughput))
                     sys.stdout.flush()
-
-                    staThEvent = StaThroughputEvent(self.hostname, throughput)
+                    if len(self.nicer) < self.nicerSize:
+                        self.nicer.append(throughput)
+                    elif len(self.nicer) == self.nicerSize:
+                        if self.nicerIter == self.nicerSize:
+                            self.nicer[0] = throughput
+                            self.nicerIter = 0
+                        else:    			 
+                            self.nicer[self.nicerIter] = throughput
+                            self.nicerIter = self.nicerIter +1
+                    nicerThroughput = sum(self.nicer)/len(self.nicer)	
+                    self.log.debug('Throughput Nicer List: {} (MBps)'.format(self.nicer))	
+                    self.log.debug('Throughput Nicer: {} MBps'.format(nicerThroughput))					
+                    staThEvent = StaThroughputEvent(self.hostname, nicerThroughput)
                     self.module.send_event(staThEvent)
+                    staPhREvent = StaPhyRateEvent(self.hostname, 54)
+                    self.module.send_event(staPhREvent)
 
         self.process.kill()
 

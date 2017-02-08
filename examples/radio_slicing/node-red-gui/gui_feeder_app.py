@@ -29,6 +29,7 @@ class GuiFeeder(modules.ControlApplication):
     def __init__(self, staList=[]):
         super(GuiFeeder, self).__init__()
         self.log = logging.getLogger('GuiFeeder')
+        self.log.setLevel(logging.INFO)
 
         self.sta_list = []
         for sta in staList:
@@ -45,7 +46,7 @@ class GuiFeeder(modules.ControlApplication):
 
     @modules.on_event(HostStateEvent)
     def change_sta_state(self, event):
-        self.log.info("Host: {} state info".format(event.ip,))
+        self.log.debug("Host: {} state info".format(event.ip,))
 
         for s in self.sta_list:
             if s.ip == event.ip:
@@ -54,7 +55,7 @@ class GuiFeeder(modules.ControlApplication):
                     return
                 elif ((s.state and not event.state) or
                       (not s.state and event.state)):
-                    self.log.info("STA {}:{} changed state to {}"
+                    self.log.debug("STA {}:{} changed state to {}"
                                   .format(s.name, s.ip, event.state))
                     s.state = event.state
 
@@ -78,9 +79,9 @@ class GuiFeeder(modules.ControlApplication):
                 self.log.info("Send new random samples for device: {}"
                               .format(sta.name))
 
-                phyRate = random.uniform(5, 54)
+                phyRate = 54
                 event = StaPhyRateEvent(sta.name, phyRate)
-                # self.send_event(event)
+                self.send_event(event)
 
                 slotShare = random.uniform(0, 100)
                 event = StaSlotShareEvent(sta.name, slotShare)

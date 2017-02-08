@@ -17,6 +17,7 @@ do
   sudo iw dev ap${i} del 2>/dev/null
   sudo iw dev sta${i} del 2>/dev/null
 done
+sudo iw dev wlan0_0 del
 
 sudo rfkill unblock all 2>/dev/null
 
@@ -41,4 +42,4 @@ sudo hostapd hostapd-multi-ssid.conf &
 sleep 5
 sudo ifconfig wlan0_0 192.168.7.1 netmask 255.255.255.0
 sudo iwconfig ap5 rate 54M
-sudo iwconfig wlan0_0 rate 24M
+sudo iwconfig wlan0_0 rate 54M
