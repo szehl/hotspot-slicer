@@ -5,6 +5,7 @@ from uniflex.core import events
 from sbi.wifi.params import HMACConfigParam, HMACAccessPolicyParam
 from uniflex.core import modules
 from uniflex.core.timer import TimerEventSender
+from node_red_gui.common import StaSlotShareEvent
 
 __author__ = "Anatolij Zubow, Sven Zehl"
 __copyright__ = "Copyright (c) 2016, Technische Universität Berlin"
@@ -48,7 +49,7 @@ class LocalRadioSlicer(modules.ControlApplication):
         self.phy_to_data_factor = 0.6
         # slots are in microseonds
         self.slot_duration = 10000  # 10 ms
-        self.stepperiod = 4
+        self.stepperiod = 8
 
         sta1 = "00:15:6d:86:0f:84" #tv set, IP: 192.168.6.10
         sta2 = '00:16:ea:5f:2a:03' #internet radio, IP: 192.168.6.20
@@ -79,6 +80,12 @@ class LocalRadioSlicer(modules.ControlApplication):
         print("*************************************************************\n")
         print("EQUAL SHARE FOR ALL\n")
         print("*************************************************************\n")
+        staslotshareevent = StaSlotShareEvent("TV", 33)
+        self.send_event(staslotshareevent)
+        staslotshareevent = StaSlotShareEvent("Guest1", 33)
+        self.send_event(staslotshareevent)
+        staslotshareevent = StaSlotShareEvent("Guest2", 33)
+        self.send_event(staslotshareevent)
         #self.log.debug('... Waiting 100s')
         #time.sleep(100)
         #print("*************************************************************\n")
@@ -114,6 +121,12 @@ class LocalRadioSlicer(modules.ControlApplication):
     def periodic_slice_adapdation(self, event):
         print("Number of Runs: "+str(self.runs))
         if self.runs < self.stepperiod:
+            staslotshareevent = StaSlotShareEvent("TV", 33)
+            self.send_event(staslotshareevent)
+            staslotshareevent = StaSlotShareEvent("Guest1", 33)
+            self.send_event(staslotshareevent)
+            staslotshareevent = StaSlotShareEvent("Guest2", 33)
+            self.send_event(staslotshareevent)
             self.runs = self.runs + 1
             self.timer.start(self.update_interval)
         elif (self.runs >= self.stepperiod) and (self.runs < 2* self.stepperiod):
@@ -240,6 +253,12 @@ class LocalRadioSlicer(modules.ControlApplication):
                     self.mac.printConfiguration()
                     #self.device.update_mac_processor(self.iface, self.mac)
                     self.device.update_radio_program(self.myHMACID, self.mac, self.iface)
+                    staslotshareevent = StaSlotShareEvent("TV", int((100/self.total_slots) * (total_used_slots_exclusive_primary+((self.total_slots-total_used_slots_exclusive_primary)/3))))
+                    self.send_event(staslotshareevent)
+                    staslotshareevent = StaSlotShareEvent("Guest1", int((100/self.total_slots) * (((self.total_slots-total_used_slots_exclusive_primary)/3))))
+                    self.send_event(staslotshareevent)
+                    staslotshareevent = StaSlotShareEvent("Guest2", int((100/self.total_slots) * (((self.total_slots-total_used_slots_exclusive_primary)/3))))
+                    self.send_event(staslotshareevent)
             
             
             #except Exception as e:
@@ -269,7 +288,14 @@ class LocalRadioSlicer(modules.ControlApplication):
             self.device.activate_radio_program(self.myHMACID, self.mac, self.iface)
             #self.log.debug('... Calling Stop Function')
             #self.my_stop_function()
+            staslotshareevent = StaSlotShareEvent("TV", 33)
+            self.send_event(staslotshareevent)
+            staslotshareevent = StaSlotShareEvent("Guest1", 33)
+            self.send_event(staslotshareevent)
+            staslotshareevent = StaSlotShareEvent("Guest2", 33)
+            self.send_event(staslotshareevent)
             self.log.debug('... done') 
             self.runs = 0
             self.timer.start(self.update_interval)
             
+

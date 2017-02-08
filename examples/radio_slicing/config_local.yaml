@@ -4,6 +4,13 @@ config:
   name: 'RadioSlicer'
   info: 'local controller program running on WiFi AP performing radio slicing (based on hMAC)'
   iface: 'lo'
+  sub: "tcp://127.0.0.1:8995"
+  pub: "tcp://127.0.0.1:8985"
+
+#remove broker if already started
+broker:
+  xpub: "tcp://127.0.0.1:8995"
+  xsub: "tcp://127.0.0.1:8985"
 
 control_applications:
   myController:

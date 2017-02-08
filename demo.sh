@@ -63,11 +63,11 @@ echo "
       ***********************************
 "
 sleep 1
-cd /root/slicer/examples/radio_slicing/node-red-gui/
+cd /root/slicer/examples/radio_slicing/node_red_gui/
 sleep 1
 node-red gui.json &
 sleep 1
-uniflex-agent --config /root/slicer/examples/radio_slicing/node-red-gui/config.yaml &
+uniflex-agent --config /root/slicer/examples/radio_slicing/node_red_gui/config.yaml &
 sleep 1
 cd ~
 sleep 1
