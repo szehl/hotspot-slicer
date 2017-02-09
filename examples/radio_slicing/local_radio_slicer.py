@@ -49,7 +49,7 @@ class LocalRadioSlicer(modules.ControlApplication):
         self.phy_to_data_factor = 0.6
         # slots are in microseonds
         self.slot_duration = 10000  # 10 ms
-        self.stepperiod = 8
+        self.stepperiod = 3
 
         sta1 = "00:15:6d:86:0f:84" #tv set, IP: 192.168.6.10
         sta2 = '00:16:ea:5f:2a:03' #internet radio, IP: 192.168.6.20
@@ -284,8 +284,9 @@ class LocalRadioSlicer(modules.ControlApplication):
                     acGuard.allowAll()  # allow all
                 self.mac.addAccessPolicy(slot_nr, acGuard)
             self.mac.printConfiguration()
-            self.device.deactivate_radio_program(self.myHMACID)
-            self.device.activate_radio_program(self.myHMACID, self.mac, self.iface)
+            #self.device.deactivate_radio_program(self.myHMACID)
+            #self.device.activate_radio_program(self.myHMACID, self.mac, self.iface)
+            self.device.update_radio_program(self.myHMACID, self.mac, self.iface)
             #self.log.debug('... Calling Stop Function')
             #self.my_stop_function()
             staslotshareevent = StaSlotShareEvent("TV", 33)
