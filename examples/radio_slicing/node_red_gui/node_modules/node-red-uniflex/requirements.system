@@ -1,0 +1,5 @@
+libzmq5-dev
+build-essential
+nodejs
+nodejs-legacy
+npm
