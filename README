@@ -1,0 +1,12 @@
+#change to root
+sudo su
+#jump to demo path
+cd /root/slicer/
+#Set PATH variable
+export PATH=$PATH:/root/slicer/hmac/ath9k-hmac/hmac_userspace_daemon/
+#start firefox
+firefox http://127.0.0.1:1880/ui
+#run demo
+./demo.sh
+#stop demo
+./demo_stop.sh
